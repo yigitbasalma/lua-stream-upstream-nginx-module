@@ -483,16 +483,16 @@ ngx_stream_lua_get_peer(lua_State *L, ngx_stream_upstream_rr_peer_t *peer,
 static ngx_stream_upstream_main_conf_t *
 ngx_stream_lua_upstream_get_upstream_main_conf(lua_State *L)
 {
-    ngx_stream_session_t        *s;
+    ngx_stream_request_t                   *r;
 
-    s = ngx_stream_lua_get_request(L);
+    r = ngx_stream_lua_get_request(L);
 
-    if (s == NULL) {
+    if (r == NULL) {
         return ngx_stream_cycle_get_module_main_conf(ngx_cycle,
                                                    ngx_stream_upstream_module);
     }
 
-    return ngx_stream_get_module_main_conf(s, ngx_stream_upstream_module);
+    return ngx_stream_get_module_main_conf(r, ngx_stream_upstream_module);
 }
 
 
