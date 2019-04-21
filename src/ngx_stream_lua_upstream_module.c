@@ -101,7 +101,7 @@ ngx_stream_lua_upstream_create_module(lua_State * L)
 
 
 static int
-ngx_stream_lua_upstream_get_upstreams(lua_State * L)
+ngx_stream_lua_upstream_get_upstreams(lua_State *L)
 {
     ngx_uint_t                            i;
     ngx_stream_upstream_srv_conf_t        **uscfp, *uscf;
