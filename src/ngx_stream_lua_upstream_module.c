@@ -481,20 +481,18 @@ ngx_stream_lua_get_peer(lua_State *L, ngx_stream_upstream_rr_peer_t *peer,
 
 
 static ngx_stream_upstream_main_conf_t *
-ngx_stream_lua_upstream_get_upstream_main_conf(lua_State *L, ngx_stream_session_t *s)
+ngx_stream_lua_upstream_get_upstream_main_conf(ngx_conf_t *cf)
 {
+    ngx_stream_lua_main_conf_t       *lmcf;
 
-    if (s == NULL) {
-        return ngx_stream_cycle_get_module_main_conf(ngx_cycle,
-                                                   ngx_stream_lua_upstream_module);
-    }
+    lmcf = ngx_stream_conf_get_module_main_conf(cf, ngx_stream_lua_module);
 
-    return ngx_stream_get_module_main_conf(s, ngx_stream_lua_upstream_module);
+    return lmcf;
 }
 
 
 static ngx_stream_upstream_srv_conf_t *
-ngx_stream_lua_upstream_find_upstream(lua_State *L, ngx_str_t *host, ngx_stream_session_t *s)
+ngx_stream_lua_upstream_find_upstream(lua_State *L, ngx_str_t *host)
 {
     u_char                               *port;
     size_t                                len;
@@ -503,7 +501,7 @@ ngx_stream_lua_upstream_find_upstream(lua_State *L, ngx_str_t *host, ngx_stream_
     ngx_stream_upstream_srv_conf_t        **uscfp, *uscf;
     ngx_stream_upstream_main_conf_t        *umcf;
 
-    umcf = ngx_stream_lua_upstream_get_upstream_main_conf(L, s);
+    umcf = ngx_stream_lua_upstream_get_upstream_main_conf(L);
     uscfp = umcf->upstreams.elts;
 
     for (i = 0; i < umcf->upstreams.nelts; i++) {
