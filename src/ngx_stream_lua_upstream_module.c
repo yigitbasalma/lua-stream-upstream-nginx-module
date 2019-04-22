@@ -10,7 +10,6 @@
 
 
 #include <ngx_core.h>
-#include <ngx_http.h>
 #include <ngx_stream.h>
 #include <lauxlib.h>
 #include "ngx_stream_lua_api.h"
@@ -66,7 +65,7 @@ ngx_module_t ngx_stream_lua_upstream_module = {
 static ngx_int_t
 ngx_stream_lua_upstream_init(ngx_conf_t *cf)
 {
-    if (ngx_stream_lua_add_package_preload(cf, "ngx.upstream",
+    if (ngx_stream_lua_add_package_preload(cf, "ngx.stream.upstream",
                                          ngx_stream_lua_upstream_create_module)
         != NGX_OK)
     {
@@ -138,7 +137,7 @@ ngx_stream_lua_upstream_get_upstreams(lua_State *L)
 
 
 static int
-ngx_stream_lua_upstream_get_servers(lua_State * L)
+ngx_stream_lua_upstream_get_servers(lua_State *L)
 {
     ngx_str_t                             host;
     ngx_uint_t                            i, j, n;
@@ -242,7 +241,7 @@ ngx_stream_lua_upstream_get_servers(lua_State * L)
 
 
 static int
-ngx_stream_lua_upstream_get_primary_peers(lua_State * L)
+ngx_stream_lua_upstream_get_primary_peers(lua_State *L)
 {
     ngx_str_t                             host;
     ngx_uint_t                            i;
@@ -282,7 +281,7 @@ ngx_stream_lua_upstream_get_primary_peers(lua_State * L)
 
 
 static int
-ngx_stream_lua_upstream_get_backup_peers(lua_State * L)
+ngx_stream_lua_upstream_get_backup_peers(lua_State *L)
 {
     ngx_str_t                             host;
     ngx_uint_t                            i;
@@ -328,7 +327,7 @@ ngx_stream_lua_upstream_get_backup_peers(lua_State * L)
 
 
 static int
-ngx_stream_lua_upstream_set_peer_down(lua_State * L)
+ngx_stream_lua_upstream_set_peer_down(lua_State *L)
 {
     ngx_stream_upstream_rr_peer_t          *peer;
 
@@ -484,7 +483,7 @@ ngx_stream_lua_get_peer(lua_State *L, ngx_stream_upstream_rr_peer_t *peer,
 static ngx_stream_upstream_main_conf_t *
 ngx_stream_lua_upstream_get_upstream_main_conf(lua_State *L)
 {
-    ngx_http_request_t                   *s;
+    ngx_stream_session_t                   *s;
 
     s = ngx_stream_lua_get_request(L);
 
