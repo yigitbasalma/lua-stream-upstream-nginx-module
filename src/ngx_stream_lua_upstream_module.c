@@ -20,10 +20,10 @@ ngx_module_t ngx_stream_lua_upstream_module;
 
 static ngx_int_t ngx_stream_lua_upstream_init(ngx_conf_t *cf);
 static int ngx_stream_lua_upstream_create_module(lua_State * L);
-static int ngx_stream_lua_upstream_get_upstreams(lua_State * L);
-static int ngx_stream_lua_upstream_get_servers(lua_State * L);
 static ngx_stream_lua_main_conf_t *
     ngx_stream_lua_upstream_get_upstream_main_conf(lua_State *L);
+static int ngx_stream_lua_upstream_get_upstreams(lua_State * L);
+static int ngx_stream_lua_upstream_get_servers(lua_State * L);
 static int ngx_stream_lua_upstream_get_primary_peers(lua_State * L);
 static int ngx_stream_lua_upstream_get_backup_peers(lua_State * L);
 static int ngx_stream_lua_get_peer(lua_State *L,
