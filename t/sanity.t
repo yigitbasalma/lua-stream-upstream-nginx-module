@@ -35,7 +35,7 @@ __DATA__
 --- config
     location /t {
         content_by_lua '
-            local upstream = require "ngx.upstream"
+            local upstream = require "ngx.stream.upstream"
             local us = upstream.get_upstreams()
             for _, u in ipairs(us) do
                 ngx.say(u)
@@ -59,7 +59,7 @@ done
 --- config
     location /t {
         content_by_lua '
-            local upstream = require "ngx.upstream"
+            local upstream = require "ngx.stream.upstream"
             local us = upstream.get_upstreams()
             for _, u in ipairs(us) do
                 ngx.say(u)
@@ -91,7 +91,7 @@ done
 --- config
     location /t {
         content_by_lua '
-            local upstream = require "ngx.upstream"
+            local upstream = require "ngx.stream.upstream"
             local ljson = require "ljson"
             for _, host in pairs{ "foo.com:1234", "bar", "blah" } do
                 local srvs, err = upstream.get_servers(host)
@@ -131,7 +131,7 @@ failed to get servers: upstream not found
         default_type text/plain;
         content_by_lua '
             local concat = table.concat
-            local upstream = require "ngx.upstream"
+            local upstream = require "ngx.stream.upstream"
             local get_servers = upstream.get_servers
             local get_upstreams = upstream.get_upstreams
 
@@ -185,7 +185,7 @@ upstream bar:
 --- config
     location /t {
         content_by_lua '
-            local upstream = require "ngx.upstream"
+            local upstream = require "ngx.stream.upstream"
             local ljson = require "ljson"
             local srvs, err = upstream.get_servers("test")
             if not srvs then
@@ -214,7 +214,7 @@ upstream bar:
 --- config
     location /t {
         content_by_lua '
-            local upstream = require "ngx.upstream"
+            local upstream = require "ngx.stream.upstream"
             local ljson = require "ljson"
             local peers, err = upstream.get_primary_peers("test")
             if not peers then
@@ -251,7 +251,7 @@ upstream bar:
 --- config
     location /t {
         content_by_lua '
-            local upstream = require "ngx.upstream"
+            local upstream = require "ngx.stream.upstream"
             local ljson = require "ljson"
             us = upstream.get_upstreams()
             for _, u in ipairs(us) do
@@ -291,7 +291,7 @@ upstream bar:
 --- config
     location /t {
         content_by_lua '
-            local upstream = require "ngx.upstream"
+            local upstream = require "ngx.stream.upstream"
             local ljson = require "ljson"
             us = upstream.get_upstreams()
             for _, u in ipairs(us) do
@@ -325,7 +325,7 @@ upstream bar:
 --- config
     location /t {
         content_by_lua '
-            local upstream = require "ngx.upstream"
+            local upstream = require "ngx.stream.upstream"
             local ljson = require "ljson"
             local u = "bar"
             local ok, err = upstream.set_peer_down(u, false, 0, true)
@@ -361,7 +361,7 @@ upstream bar:
 --- config
     location /t {
         content_by_lua '
-            local upstream = require "ngx.upstream"
+            local upstream = require "ngx.stream.upstream"
             local ljson = require "ljson"
             local u = "bar"
             local ok, err = upstream.set_peer_down(u, false, 1, true)
@@ -397,7 +397,7 @@ failed to set peer down: bad peer id
 --- config
     location /t {
         content_by_lua '
-            local upstream = require "ngx.upstream"
+            local upstream = require "ngx.stream.upstream"
             local ljson = require "ljson"
             local u = "bar"
             local ok, err = upstream.set_peer_down(u, true, 0, true)
@@ -433,7 +433,7 @@ failed to set peer down: bad peer id
 --- config
     location /t {
         content_by_lua '
-            local upstream = require "ngx.upstream"
+            local upstream = require "ngx.stream.upstream"
             local ljson = require "ljson"
             local u = "bar"
             local ok, err = upstream.set_peer_down(u, true, 0, true)
@@ -475,7 +475,7 @@ failed to set peer down: bad peer id
 --- config
     location /t {
         content_by_lua '
-            local upstream = require "ngx.upstream"
+            local upstream = require "ngx.stream.upstream"
             local ljson = require "ljson"
             local u = "bar"
             local ok, err = upstream.set_peer_down(u, true, 1, true)
@@ -519,7 +519,7 @@ failed to set peer down: bad peer id
     location /t {
         content_by_lua '
                 local concat = table.concat
-                local upstream = require "ngx.upstream"
+                local upstream = require "ngx.stream.upstream"
                 local get_servers = upstream.get_servers
                 local get_upstreams = upstream.get_upstreams
 
@@ -573,7 +573,7 @@ upstream 127.0.0.1:1130:
     }
 --- config
     log_by_lua_block {
-        local upstream = require "ngx.upstream"
+        local upstream = require "ngx.stream.upstream"
         ngx.log(ngx.INFO, "upstream = " .. tostring(upstream.current_upstream_name()))
     }
     location /test {
@@ -617,7 +617,7 @@ qr/upstream = 127.0.0.1:\d+/
 === TEST 17: upstream_name with no proxy_pass
 --- config
     log_by_lua_block {
-        local upstream = require "ngx.upstream"
+        local upstream = require "ngx.stream.upstream"
         ngx.log(ngx.INFO, "upstream = " .. tostring(upstream.current_upstream_name()))
     }
     location /test {
@@ -637,7 +637,7 @@ qr/upstream = nil/
 --- config
     location /test {
         content_by_lua_block {
-            local upstream = require "ngx.upstream"
+            local upstream = require "ngx.stream.upstream"
             ngx.say(upstream.current_upstream_name())
         }
     }

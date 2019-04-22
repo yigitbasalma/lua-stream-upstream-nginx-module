@@ -27,7 +27,7 @@ __DATA__
 --- config
     location /t {
         content_by_lua_block {
-            local upstream = require "ngx.upstream"
+            local upstream = require "ngx.stream.upstream"
             local c = 0
             for _, _ in pairs(upstream) do
                 c = c + 1
