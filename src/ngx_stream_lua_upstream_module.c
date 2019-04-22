@@ -23,7 +23,7 @@ static int ngx_stream_lua_upstream_create_module(lua_State * L);
 static int ngx_stream_lua_upstream_get_upstreams(lua_State * L);
 static int ngx_stream_lua_upstream_get_servers(lua_State * L);
 static ngx_stream_lua_main_conf_t *
-    ngx_stream_lua_get_main_conf(lua_State *L);
+    ngx_stream_lua_get_main_conf(ngx_conf_t *cf);
 static int ngx_stream_lua_upstream_get_primary_peers(lua_State * L);
 static int ngx_stream_lua_upstream_get_backup_peers(lua_State * L);
 static int ngx_stream_lua_get_peer(lua_State *L,
@@ -111,7 +111,7 @@ ngx_stream_lua_upstream_get_upstreams(lua_State *L)
         return luaL_error(L, "no argument expected");
     }
 
-    umcf = ngx_stream_lua_upstream_get_upstream_main_conf(L);
+    umcf = ngx_stream_lua_get_main_conf();
     uscfp = umcf->upstreams.elts;
 
     lua_createtable(L, umcf->upstreams.nelts, 0);
@@ -485,7 +485,8 @@ ngx_stream_lua_get_main_conf(ngx_conf_t *cf)
 {
     ngx_stream_lua_main_conf_t       *lmcf;
 
-    lmcf = ngx_stream_conf_get_module_main_conf(cf, ngx_stream_lua_module);
+    lmcf = ngx_stream_conf_get_module_main_conf(cf,
+      ngx_stream_lua_upstream_module);
 
     return lmcf;
 }
@@ -501,7 +502,7 @@ ngx_stream_lua_upstream_find_upstream(lua_State *L, ngx_str_t *host)
     ngx_stream_upstream_srv_conf_t        **uscfp, *uscf;
     ngx_stream_lua_main_conf_t        *umcf;
 
-    umcf = ngx_stream_lua_get_main_conf(L);
+    umcf = ngx_stream_lua_get_main_conf();
     uscfp = umcf->upstreams.elts;
 
     for (i = 0; i < umcf->upstreams.nelts; i++) {
