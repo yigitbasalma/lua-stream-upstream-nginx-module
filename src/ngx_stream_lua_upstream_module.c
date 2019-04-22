@@ -487,7 +487,7 @@ ngx_stream_lua_upstream_get_upstream_main_conf(lua_State *L)
 
     r = ngx_stream_lua_get_req(L);
 
-    if (s == NULL) {
+    if (r == NULL) {
         return ngx_stream_cycle_get_module_main_conf(ngx_cycle,
                                                    ngx_stream_lua_upstream_module);
     }
