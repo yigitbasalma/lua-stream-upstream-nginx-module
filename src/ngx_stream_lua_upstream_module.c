@@ -483,7 +483,7 @@ ngx_stream_lua_get_peer(lua_State *L, ngx_stream_upstream_rr_peer_t *peer,
 static ngx_stream_upstream_main_conf_t *
 ngx_stream_lua_upstream_get_upstream_main_conf(lua_State *L)
 {
-    ngx_stream_session_t                   *s;
+    ngx_http_request_t                   *s;
 
     s = ngx_stream_lua_get_request(L);
 
