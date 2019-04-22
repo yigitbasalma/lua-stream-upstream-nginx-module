@@ -491,6 +491,7 @@ ngx_stream_lua_upstream_get_upstream_main_conf(lua_State *L)
         return ngx_stream_cycle_get_module_main_conf(ngx_cycle,
                                                    ngx_stream_lua_upstream_module);
     }
+    printf("%p",(void*)&r);
 
     return ngx_stream_get_module_main_conf(r, ngx_stream_lua_upstream_module);
 }
